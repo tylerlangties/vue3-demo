@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../views/Home.vue'
 import MyPlaylists from '../views/MyPlaylists.vue'
-import ProjectTwo from '../views/ProjectTwo.vue'
 import PathNotFound from '../views/PathNotFound.vue'
 
 const routes = [
