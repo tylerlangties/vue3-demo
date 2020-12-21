@@ -6,7 +6,6 @@ const instance = Axios.create({
 })
 
 const POSTS_URL = 'posts'
-const IMAGES_URL = 'photos'
 
 const getPosts = async ({ start = 0, limit = 5 } = {}) => {
   return wait(
@@ -23,22 +22,7 @@ const posts = {
   get: getPosts
 }
 
-function getPhotos({ start = 0, limit = 5 } = {}) {
-  return wait(
-    instance.get(IMAGES_URL, {
-      searchParams: {
-        _start: start,
-        _limit: limit
-      }
-    })
-  )
-}
-
-const photos = {
-  get: getPhotos
-}
-
-export { posts, photos }
+export { posts }
 
 //simulate res time
 function wait(promise, n = 1500) {

@@ -8,7 +8,7 @@
       <div
         class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5"
       >
-        <Card v-for="(post, i) in allPosts.data" :key="i" :src="post" />
+        <Tile v-for="(post, i) in allPosts.data" :key="i" :src="post" />
       </div>
     </div>
   </div>
@@ -18,6 +18,7 @@
 import { ref } from 'vue'
 import usePromiseFn from '../composables/use-promise'
 import Card from '../components/Card.vue'
+import Tile from '../components/Tile.vue'
 import * as api from '../api'
 
 import Spinner from '../components/Spinner.vue'
@@ -25,14 +26,15 @@ export default {
   name: 'MyPlaylists',
   components: {
     Spinner,
-    Card
+    Card,
+    Tile
   },
   setup() {
     const allPosts = ref([])
     const { loading, error, use: getAllPosts } = usePromiseFn(() => {
       return api.posts
         .get({
-          limit: 100
+          limit: 20
         })
         .then(result => {
           allPosts.value = result

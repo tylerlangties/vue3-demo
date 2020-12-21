@@ -16,6 +16,7 @@ const routes = [
     props: true,
     component: MyPlaylists
   },
+  //New way of handling wild routes | path: '*' no longer works in Vue 3
   { path: '/:pathMatch(.*)*', name: 'PathNotFound', component: PathNotFound }
 ]
 
