@@ -7,6 +7,7 @@
             <a
               class="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700"
               href="#"
+              @click="$router.push('/')"
               >Brand</a
             >
 
@@ -17,6 +18,8 @@
                 class="w-32 lg:w-64 px-4 py-3 leading-tight text-sm text-gray-700 bg-gray-100 rounded-md placeholder-gray-500 border border-transparent focus:outline-none focus:bg-white focus:shadow-outline focus:border-blue-400"
                 placeholder="Search"
                 aria-label="Search"
+                v-model="searchInput.search"
+                @keyup.enter="onSearch"
               />
             </div>
           </div>
@@ -24,6 +27,7 @@
           <!-- Mobile menu button -->
           <div class="flex md:hidden">
             <button
+              @click="menuToggle"
               type="button"
               class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
               aria-label="toggle menu"
@@ -39,7 +43,10 @@
         </div>
 
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-        <div class="hidden md:flex items-center">
+        <div
+          class="md:flex items-center"
+          :class="menuOpen ? 'block' : 'hidden'"
+        >
           <div class="flex flex-col mt-2 md:flex-row md:mt-0 md:mx-1">
             <a
               class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
@@ -56,7 +63,8 @@
             <a
               class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
               href="#"
-              >Blog</a
+              @click="$router.push('/search')"
+              >Search</a
             >
             <a
               class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
@@ -69,6 +77,7 @@
             <a
               class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-500 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto"
               href="#"
+              @click="$router.push('/login')"
               >Login</a
             >
             <a
@@ -79,7 +88,7 @@
           </div>
 
           <!-- Search input on mobile screen -->
-          <div class="mt-3 md:hidden">
+          <div class="md:hidden mt-3">
             <input
               type="text"
               class="w-full px-4 py-3 leading-tight text-sm text-gray-700 bg-gray-100 rounded-md placeholder-gray-500 focus:outline-none focus:bg-white focus:shadow-outline"
@@ -92,3 +101,26 @@
     </div>
   </nav>
 </template>
+
+<script>
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+export default {
+  name: 'Navbar',
+  setup() {
+    const router = useRouter()
+
+    const menuOpen = ref(false)
+    const menuToggle = () => {
+      menuOpen.value = !menuOpen.value
+    }
+
+    const searchInput = reactive({ search: '' })
+    const onSearch = () => {
+      router.push({ name: 'search', query: { ...searchInput } })
+    }
+
+    return { searchInput, onSearch, menuOpen, menuToggle }
+  }
+}
+</script>
