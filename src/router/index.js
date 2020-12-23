@@ -3,18 +3,40 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import MyPlaylists from '../views/MyPlaylists.vue'
 import PathNotFound from '../views/PathNotFound.vue'
+import Register from '../views/Register.vue'
+import Login from '../views/Login.vue'
+import Search from '../views/Search.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: { requireAuth: true }
   },
   {
     path: '/playlists',
     name: 'playlists',
     props: true,
-    component: MyPlaylists
+    component: MyPlaylists,
+    meta: { requireAuth: true }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: Search,
+    props: true,
+    meta: { requireAuth: true }
   },
   //New way of handling wild routes | path: '*' no longer works in Vue 3
   { path: '/:pathMatch(.*)*', name: 'PathNotFound', component: PathNotFound }

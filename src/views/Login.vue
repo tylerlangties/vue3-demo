@@ -1,0 +1,90 @@
+<template>
+  <main
+    class="Login bg-white w-full max-w-sm rounded-lg shadow-md overflow-hidden mx-auto"
+  >
+    <div class="py-4 px-6">
+      <h2 class="text-center font-bold text-gray-700 text-3xl">Brand</h2>
+
+      <h3 class="mt-1 text-center font-medium text-gray-600 text-xl">
+        Welcome Back
+      </h3>
+
+      <p class="mt-1 text-center text-gray-500">Login or create account</p>
+
+      <form @submit.prevent="onSubmit">
+        <div class="mt-4 w-full">
+          <input
+            class="w-full mt-2 py-2 px-4 bg-white text-gray-700 border border-gray-300 rounded block placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring"
+            type="email"
+            placeholder="Email Address"
+            aria-label="Email Address"
+            v-model="user.email"
+          />
+        </div>
+
+        <div class="mt-4 w-full">
+          <input
+            class="w-full mt-2 py-2 px-4 bg-white text-gray-700 border border-gray-300 rounded block placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring"
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
+            v-model="user.password"
+          />
+        </div>
+
+        <div class="flex justify-between items-center mt-4">
+          <a href="#" class="text-gray-600 text-sm hover:text-gray-500"
+            >Forget Password?</a
+          >
+
+          <button
+            class="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 focus:outline-none"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex items-center justify-center py-4 bg-gray-100 text-center">
+      <span class="text-gray-600 text-sm">Don't have an account? </span>
+
+      <a
+        href="#"
+        @click="$router.push('/register')"
+        class="text-blue-600 font-bold mx-2 text-sm hover:text-blue-500"
+        >Register</a
+      >
+    </div>
+  </main>
+</template>
+
+<script>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+export default {
+  name: 'Login',
+  setup(_, context) {
+    const userForm = () =>
+      reactive({
+        email: 'bigtony@newyork.com',
+        password: 'password'
+      })
+
+    const router = useRouter()
+    const user = ref(userForm())
+
+    const resetUser = () => {
+      user.value = userForm()
+    }
+
+    const onSubmit = () => {
+      resetUser()
+      router.push('/')
+    }
+    return { user, onSubmit }
+  }
+}
+</script>
