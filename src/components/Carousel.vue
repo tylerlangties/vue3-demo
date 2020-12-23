@@ -1,5 +1,5 @@
 <template>
-  <div :class="'glide' + uid">
+  <div :class="'glide' + id">
     <div class="glide__arrows" data-glide-el="controls">
       <Button data-glide-dir="<">Prev</Button>
       <Button data-glide-dir=">">Next</Button>
@@ -15,12 +15,13 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, getCurrentInstance } from 'vue'
 import Glide from '@glidejs/glide'
-import '@glidejs/glide/dist/css/glide.core.min.css'
 
 import Button from './UI/Button.vue'
 import Card from './Card.vue'
+import '@glidejs/glide/dist/css/glide.core.min.css'
+
 export default {
   name: 'Carousel',
   components: { Button, Card },
@@ -30,10 +31,11 @@ export default {
       required: true
     }
   },
-  setup(props) {
-    const uid = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000
+  setup() {
+    //we can access the component UID and other instance properties here
+    const id = getCurrentInstance().uid
 
-    function createCarouselInstance(id) {
+    const createCarouselInstance = id => {
       let uniqueClass = '.glide' + id
       new Glide(uniqueClass, {
         breakpoints: {
@@ -45,11 +47,13 @@ export default {
         }
       }).mount()
     }
-
+    //lifecycle hooks must be manually imported
     onMounted(() => {
-      createCarouselInstance(uid)
+      createCarouselInstance(id)
     })
-    return { uid }
+    //props are automatically exposed to the template, but
+    //anything declared in set up must be manually returned
+    return { id }
   }
 }
 </script>
