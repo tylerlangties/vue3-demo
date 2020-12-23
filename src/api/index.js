@@ -10,7 +10,7 @@ const POSTS_URL = 'posts'
 const getPosts = async ({ start = 0, limit = 5 } = {}) => {
   return wait(
     instance.get(POSTS_URL, {
-      searchParams: {
+      params: {
         _start: start,
         _limit: limit
       }
@@ -22,7 +22,7 @@ const posts = {
   get: getPosts
 }
 
-export { posts }
+export { posts, instance }
 
 //simulate res time
 function wait(promise, n = 1500) {
