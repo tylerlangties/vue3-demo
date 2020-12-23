@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto px-8 py-4 bg-white rounded-lg shadow-md">
+  <div class="px-8 py-4 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center">
       <span class="font-light text-gray-600 text-sm">Mar 10, 2019</span>
       <a
@@ -12,13 +12,10 @@
       <a
         href="#"
         class="text-2xl text-gray-700 font-bold hover:text-gray-600 hover:underline"
-        >Accessibility tools for designers and developers</a
+        >{{ src.title }}</a
       >
       <p class="mt-2 text-gray-600">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora
-        expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-        enim reprehenderit nisi, accusamus delectus nihil quis facere in modi
-        ratione libero!
+        {{ src.body }}
       </p>
     </div>
 
