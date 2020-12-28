@@ -17,11 +17,11 @@
 
 <script>
 import { ref } from 'vue'
-import { posts } from '../api'
-import usePromiseFn from '../composables/use-promise'
+import { posts } from '/@/api'
+import usePromiseFn from '/@/composables/use-promise'
 
-import Carousel from '../components/Carousel.vue'
-import Spinner from '../components/Spinner.vue'
+import Carousel from '/@/components/Carousel.vue'
+import Spinner from '/@/components/Spinner.vue'
 
 export default {
   name: 'Home',
