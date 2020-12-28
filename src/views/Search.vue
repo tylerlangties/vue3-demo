@@ -1,4 +1,10 @@
 <template>
+  <div v-if="$route.query.search" class="ResultsFor">
+    <h2 class="text-3xl">
+      Showing {{ search.hits }} results for "{{ $route.query.search }}"
+    </h2>
+  </div>
+
   <main class="Search grid grid-cols-4 gap-x-2.5">
     <div class="Search__Filterbar flex justify-between w-full col-span-4 my-4">
       <div>
@@ -102,7 +108,7 @@ export default {
     watch(
       () => [route.query.search, activeFilters.value],
       () => useSearch({ term: route.query.search, activeFilters }),
-      { immediate: true }
+      { immediate: false }
     )
 
     return {
