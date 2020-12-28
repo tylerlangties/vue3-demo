@@ -25,6 +25,6 @@ const posts = {
 export { posts, instance }
 
 //simulate res time
-function wait(promise, n = 1500) {
+function wait(promise, n = 1000) {
   return new Promise(res => setTimeout(() => res(promise), n))
 }
