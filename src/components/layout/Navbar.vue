@@ -49,27 +49,12 @@
         >
           <div class="flex flex-col mt-2 md:flex-row md:mt-0 md:mx-1">
             <a
+              v-for="(navItem, i) in nav.main"
+              :key="i"
               class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
               href="#"
-              @click="$router.push('/')"
-              >Home</a
-            >
-            <a
-              class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
-              href="#"
-              @click="$router.push('/playlists')"
-              >Playlists</a
-            >
-            <a
-              class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
-              href="#"
-              @click="$router.push('/search')"
-              >Search</a
-            >
-            <a
-              class="my-1 text-sm text-gray-700 leading-5 hover:text-blue-600 hover:underline md:mx-4 md:my-0"
-              href="#"
-              >Courses</a
+              @click="$router.push(navItem.url)"
+              >{{ navItem.label }}</a
             >
           </div>
 
@@ -105,6 +90,54 @@
 <script>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+const nav = {
+  main: [
+    {
+      name: 'home',
+      label: 'Home',
+      url: '/',
+      requireAuth: true
+    },
+    {
+      name: 'playlists',
+      label: 'Playlists',
+      url: '/playlists',
+      requireAuth: true
+    },
+    {
+      name: 'search',
+      label: 'Search',
+      url: '/search',
+      requireAuth: true
+    }
+  ],
+  aside: [
+    {
+      name: 'login',
+      label: 'Login',
+      url: '/login',
+      requireAuth: false
+    },
+    {
+      name: 'register',
+      label: 'Register',
+      url: '/register',
+      requireAuth: false
+    },
+    {
+      name: 'notifications',
+      label: 'Notifications',
+      url: '/notifications',
+      requireAuth: true
+    },
+    {
+      name: 'profile',
+      label: 'Profile',
+      url: '/profile',
+      requireAuth: true
+    }
+  ]
+}
 export default {
   name: 'Navbar',
   setup() {
@@ -120,7 +153,7 @@ export default {
       router.push({ name: 'search', query: { ...searchInput } })
     }
 
-    return { searchInput, onSearch, menuOpen, menuToggle }
+    return { searchInput, onSearch, menuOpen, menuToggle, nav }
   }
 }
 </script>
