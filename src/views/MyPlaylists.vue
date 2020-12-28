@@ -8,7 +8,7 @@
       <div
         class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5"
       >
-        <Tile v-for="(post, i) in allPosts.data" :key="i" :src="post" />
+        <Tile v-for="(playlist, i) in allPosts.data" :key="i" :src="playlist" />
       </div>
     </div>
   </div>
@@ -16,12 +16,12 @@
 
 <script>
 import { ref } from 'vue'
-import usePromiseFn from '../composables/use-promise'
-import Card from '../components/Card.vue'
-import Tile from '../components/Tile.vue'
-import * as api from '../api'
+import usePromiseFn from '/@/composables/use-promise'
+import Card from '/@/components/Card.vue'
+import Tile from '/@/components/Tile.vue'
+import * as api from '/@/api'
 
-import Spinner from '../components/Spinner.vue'
+import Spinner from '/@/components/Spinner.vue'
 export default {
   name: 'MyPlaylists',
   components: {

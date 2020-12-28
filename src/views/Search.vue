@@ -5,9 +5,10 @@
         <button class="bg-blue-500 px-2 py-1 rounded text-white text-xl">
           <i class="fas fa-sort"></i> Filters
         </button>
-        <span class="text-xl ml-2" v-if="activeFilters.length"
-          >({{ activeFilters.length }})</span
-        ><span @click="activeFilters = []">( clear filters )</span>
+        <span class="text-xl ml-2" v-if="activeFilters.length">
+          ({{ activeFilters.length }})
+        </span>
+        <span @click="activeFilters = []">( clear filters )</span>
       </div>
       <span>{{ search.hits }} results</span>
     </div>
@@ -29,12 +30,10 @@
                   :key="subFilter.id"
                 >
                   <label class="flex justify-between">
-                    <span class="mr-2">{{ subFilter.label }}</span>
-                    <input
+                    <Checkbox
                       v-model="activeFilters"
                       :value="subFilter.label"
-                      type="checkbox"
-                      class="form-checkbox"
+                      :label="subFilter.label"
                     />
                   </label>
                 </span>
@@ -63,12 +62,14 @@ import { watch, reactive, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
-import Tile from '../components/Tile.vue'
-import Spinner from '../components/Spinner.vue'
-import Collapse from '../components/UI/Collapse.vue'
+import Checkbox from '/@/components/UI/Checkbox.vue'
+import Tile from '/@/components/Tile.vue'
+import Spinner from '/@/components/Spinner.vue'
+import Collapse from '/@/components/UI/Collapse.vue'
 export default {
   name: 'Search',
   components: {
+    Checkbox,
     Collapse,
     Tile,
     Spinner
