@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '/@/store'
 
 import Home from '../views/Home.vue'
 import MyPlaylists from '../views/MyPlaylists.vue'
@@ -45,6 +46,13 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  //basic route guard
+  const { user } = store.getters['auth/useAuth']
+  if (to.meta.requireAuth && !user) next('/login')
+  else next()
 })
 
 export default router

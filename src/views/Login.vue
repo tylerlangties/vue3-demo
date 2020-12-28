@@ -63,10 +63,12 @@
 <script>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'Login',
   setup(_, context) {
+    const { dispatch } = useStore()
     const userForm = () =>
       reactive({
         email: 'bigtony@newyork.com',
@@ -80,9 +82,10 @@ export default {
       user.value = userForm()
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+      const authenticated = await dispatch('auth/login', user)
       resetUser()
-      router.push('/')
+      if (authenticated) router.push('/')
     }
     return { user, onSubmit }
   }
