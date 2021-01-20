@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '/@/store'
 
+import useAuth from '../modules/auth'
+
 import Home from '../views/Home.vue'
 import MyPlaylists from '../views/MyPlaylists.vue'
 import PathNotFound from '../views/PathNotFound.vue'
-import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Search from '../views/Search.vue'
 
@@ -21,11 +22,6 @@ const routes = [
     props: true,
     component: MyPlaylists,
     meta: { requireAuth: true }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register
   },
   {
     path: '/login',
@@ -50,8 +46,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   //basic route guard
-  const { user } = store.getters['auth/useAuth']
-  if (to.meta.requireAuth && !user) next('/login')
+  const { isAuthenticated } = useAuth()
+
+  if (to.meta.requireAuth && !isAuthenticated.value) next('/login')
   else next()
 })
 
