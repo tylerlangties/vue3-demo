@@ -1,5 +1,6 @@
 <template>
-  <main
+  <div v-if="busy" class="loading-box"><Spinner></div>
+  <main v-else
     class="Login bg-white w-full max-w-sm rounded-lg shadow-md overflow-hidden mx-auto"
   >
     <div class="py-4 px-6">
@@ -15,22 +16,13 @@
         <div class="mt-4 w-full">
           <input
             class="w-full mt-2 py-2 px-4 bg-white text-gray-700 border border-gray-300 rounded block placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring"
-            type="email"
-            placeholder="Email Address"
-            aria-label="Email Address"
-            v-model="user.email"
+            type="text"
+            placeholder="Username"
+            aria-label="Username"
+            v-model="username"
           />
         </div>
-
-        <div class="mt-4 w-full">
-          <input
-            class="w-full mt-2 py-2 px-4 bg-white text-gray-700 border border-gray-300 rounded block placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring"
-            type="password"
-            placeholder="Password"
-            aria-label="Password"
-            v-model="user.password"
-          />
-        </div>
+        <div class="validation" :class="{'error': validationError}">Username is required</div>
 
         <div class="flex justify-between items-center mt-4">
           <a href="#" class="text-gray-600 text-sm hover:text-gray-500"
@@ -46,48 +38,47 @@
         </div>
       </form>
     </div>
-
-    <div class="flex items-center justify-center py-4 bg-gray-100 text-center">
-      <span class="text-gray-600 text-sm">Don't have an account? </span>
-
-      <a
-        href="#"
-        @click="$router.push('/register')"
-        class="text-blue-600 font-bold mx-2 text-sm hover:text-blue-500"
-        >Register</a
-      >
-    </div>
   </main>
 </template>
 
 <script>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import useAuth from '../modules/auth'
+
+import Spinner from '/@/components/Spinner.vue'
 
 export default {
   name: 'Login',
-  setup(_, context) {
-    const { dispatch } = useStore()
-    const userForm = () =>
-      reactive({
-        email: 'bigtony@newyork.com',
-        password: 'password'
-      })
-
+  components: {
+    Spinner
+  },
+  setup() {
     const router = useRouter()
-    const user = ref(userForm())
-
-    const resetUser = () => {
-      user.value = userForm()
-    }
+    const { busy, login, isAuthenticated, error } = useAuth()
+    
+    const username = ref('')
+    const validationError = ref(false)
 
     const onSubmit = async () => {
-      const authenticated = await dispatch('auth/login', user)
-      resetUser()
-      if (authenticated) router.push('/')
+      if (!username.value) validationError.value = true
+      else {
+        login(username.value).then(() => {
+          if (isAuthenticated.value) router.push('/')
+        })
+      } 
     }
-    return { user, onSubmit }
+    return { username, onSubmit, busy, validationError }
   }
 }
 </script>
+
+<style>
+.validation{
+  display: none;
+  color: red;
+}
+.error{
+  display: block !important;
+}
+</style>
