@@ -2,10 +2,7 @@
   <div class="px-8 py-4 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center">
       <span class="font-light text-gray-600 text-sm">Mar 10, 2019</span>
-      <a
-        class="px-3 py-1 bg-gray-600 text-gray-100 text-sm font-bold rounded hover:bg-gray-500"
-        >Design</a
-      >
+      <Bookmark :source="src" />
     </div>
 
     <div class="mt-2">
@@ -35,8 +32,13 @@
 </template>
 
 <script>
+import Bookmark from './Bookmark.vue'
+
 export default {
   name: 'Tile',
+  components: {
+    Bookmark
+  },
   props: {
     src: {
       type: Object,
