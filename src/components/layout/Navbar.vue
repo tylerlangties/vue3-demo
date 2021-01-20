@@ -62,13 +62,8 @@
             <a
               class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-500 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto"
               href="#"
-              @click="$router.push('/login')"
-              >Login</a
-            >
-            <a
-              class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-blue-500 font-medium text-white leading-5 hover:bg-blue-600 md:mx-0 md:w-auto"
-              href="#"
-              >Join free</a
+              @click="signout"
+              >{{ isAuthenticated ? 'Logout' : 'Login' }}</a
             >
           </div>
 
@@ -90,6 +85,7 @@
 <script>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import useAuth from '../../modules/auth'
 const nav = {
   main: [
     {
@@ -119,12 +115,6 @@ const nav = {
       requireAuth: false
     },
     {
-      name: 'register',
-      label: 'Register',
-      url: '/register',
-      requireAuth: false
-    },
-    {
       name: 'notifications',
       label: 'Notifications',
       url: '/notifications',
@@ -142,6 +132,13 @@ export default {
   name: 'Navbar',
   setup() {
     const router = useRouter()
+    const { isAuthenticated, logout } = useAuth()
+
+    const signout = () => {
+      if (isAuthenticated) {
+        logout()
+      }
+    }
 
     const menuOpen = ref(false)
     const menuToggle = () => {
@@ -153,7 +150,15 @@ export default {
       router.push({ name: 'search', query: { ...searchInput } })
     }
 
-    return { searchInput, onSearch, menuOpen, menuToggle, nav }
+    return {
+      searchInput,
+      onSearch,
+      menuOpen,
+      menuToggle,
+      nav,
+      isAuthenticated,
+      signout
+    }
   }
 }
 </script>
