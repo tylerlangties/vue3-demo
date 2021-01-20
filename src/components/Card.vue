@@ -6,7 +6,7 @@
       alt="Article"
     />
 
-    <div class="p-6">
+    <div class="flex flex-col justify-between p-6">
       <div>
         <span class="text-blue-600 text-xs font-medium uppercase">Course</span>
         <a

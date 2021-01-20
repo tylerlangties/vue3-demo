@@ -7,7 +7,7 @@
     <div data-glide-el="track" class="glide__track">
       <ul class="glide__slides">
         <li class="glide__slide" v-for="card in src" :key="card.id">
-          <Card :src="card" />
+          <Card style="height: 500px; margin-bottom: 1rem" :src="card" />
         </li>
       </ul>
     </div>
