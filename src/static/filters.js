@@ -1,10 +1,4 @@
-import { instance } from '../../../api'
-import { randomNumber } from '../../../composables/utils'
-import { mockCall } from '../../../composables/utils'
-
-const POSTS_URL = 'posts'
-
-const filters = [
+export default [
   {
     label: 'Topic',
     id: 'topic',
@@ -108,66 +102,3 @@ const filters = [
     ]
   }
 ]
-
-const state = {
-  busy: {
-    search: false,
-    filters: false
-  },
-  error: null
-}
-
-const actions = {
-  async useSearch({ commit }) {
-    try {
-      commit('busy', { service: 'search', busy: true })
-
-      const params = {
-        _start: randomNumber(1, 49),
-        _limit: randomNumber(50, 100)
-      }
-
-      const { data } = await instance.get(POSTS_URL, { params })
-
-      return { results: data, hits: data.length }
-    } catch (e) {
-      commit('error', e)
-      console.error(e)
-    } finally {
-      commit('busy', { service: 'search', busy: false })
-    }
-  },
-  async getFilters({ commit }) {
-    commit('busy', { service: 'filters', busy: true })
-    const data = await mockCall(750, filters)
-    commit('busy', { service: 'filters', busy: false })
-    return data
-  }
-}
-
-const mutations = {
-  busy(state, { service, busy }) {
-    state.busy[service] = busy
-  },
-  error(state, error) {
-    state.error = error
-  }
-}
-
-const getters = {
-  useBusy(state) {
-    return state.busy
-  },
-  useError(state) {
-    return state.error
-  }
-}
-
-export default {
-  namespaced: true,
-  name: 'Search',
-  state,
-  actions,
-  mutations,
-  getters
-}
