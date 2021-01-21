@@ -1,6 +1,6 @@
 import { ref, readonly } from 'vue'
 
-let bookmarks = ref([])
+const bookmarks = ref([])
 
 export default function useBookmarks() {
   const addBookmark = item => {
