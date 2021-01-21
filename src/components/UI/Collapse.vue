@@ -36,14 +36,23 @@ export default {
     openDefault: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
     if (this.openDefault) this.open = true
   },
+  watch: {
+    disabled() {
+      if (this.disabled) this.open = false
+    }
+  },
   methods: {
     toggle(event) {
-      this.open = !this.open
+      if (!this.disabled) this.open = !this.open
     },
 
     startTransition(el) {
